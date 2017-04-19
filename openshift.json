@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "parse-server-example",
+    "name": "asherah",
     "annotations": {
       "description": "An example Parse API server using the parse-server module",
       "tags": "quickstart,nodejs,mongodb,parse",
@@ -10,7 +10,7 @@
     }
   },
   "labels": {
-    "template": "parse-server-example"
+    "template": "asherah"
   },
   "objects": [
     {
@@ -143,7 +143,7 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "parse-server-example"
+                "asherah"
               ],
               "from": {
                 "kind": "ImageStreamTag",
@@ -169,7 +169,7 @@
           "spec": {
             "containers": [
               {
-                "name": "parse-server-example",
+                "name": "asherah",
                 "image": " ",
                 "ports": [
                   {
@@ -401,7 +401,7 @@
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "parse-server-example"
+      "value": "asherah"
     },
     {
       "name": "NAMESPACE",
@@ -436,7 +436,7 @@
       "displayName": "Git Repository URL",
       "description": "The URL of the repository with your application source code.",
       "required": true,
-      "value": "https://github.com/ParsePlatform/parse-server-example.git"
+      "value": "https://github.com/ParsePlatform/asherah.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",

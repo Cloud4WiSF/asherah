@@ -1,4 +1,4 @@
-# parse-server-example
+# asherah
 
 Example project using the [parse-server](https://github.com/ParsePlatform/parse-server) module on Express.
 
@@ -34,7 +34,7 @@ Read the full Parse Server guide here: https://github.com/ParsePlatform/parse-se
 
 #### With the Deploy to AWS Button
 
-<a title="Deploy to AWS" href="https://console.aws.amazon.com/elasticbeanstalk/home?region=us-west-2#/newApplication?applicationName=ParseServer&solutionStackName=Node.js&tierName=WebServer&sourceBundleUrl=https://s3.amazonaws.com/elasticbeanstalk-samples-us-east-1/eb-parse-server-sample/parse-server-example.zip" target="_blank"><img src="http://d0.awsstatic.com/product-marketing/Elastic%20Beanstalk/deploy-to-aws.png" height="40"></a>
+<a title="Deploy to AWS" href="https://console.aws.amazon.com/elasticbeanstalk/home?region=us-west-2#/newApplication?applicationName=ParseServer&solutionStackName=Node.js&tierName=WebServer&sourceBundleUrl=https://s3.amazonaws.com/elasticbeanstalk-samples-us-east-1/eb-parse-server-sample/asherah.zip" target="_blank"><img src="http://d0.awsstatic.com/product-marketing/Elastic%20Beanstalk/deploy-to-aws.png" height="40"></a>
 
 #### Without It
 
@@ -90,7 +90,7 @@ A detailed tutorial is available here:
 1. Register for a free [OpenShift Online (Next Gen) account](http://www.openshift.com/devpreview/register.html)
 1. Create a project in the [OpenShift Online Console](https://console.preview.openshift.com/console/).
 1. Install the [OpenShift CLI](https://docs.openshift.com/online/getting_started/beyond_the_basics.html#btb-installing-the-openshift-cli).
-1. Add the Parse Server template to your project: `oc create -f https://raw.githubusercontent.com/ParsePlatform/parse-server-example/master/openshift.json`
+1. Add the Parse Server template to your project: `oc create -f https://raw.githubusercontent.com/ParsePlatform/asherah/master/openshift.json`
 1. Deploy Parse Server from the web console
   1. Open your project in the [OpenShift Online Console](https://console.preview.openshift.com/console/):
   1. Click **Add to Project** from the top navigation

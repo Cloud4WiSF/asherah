@@ -91,7 +91,7 @@ A detailed tutorial is available here:
 1. Register for a free [OpenShift Online (Next Gen) account](http://www.openshift.com/devpreview/register.html)
 1. Create a project in the [OpenShift Online Console](https://console.preview.openshift.com/console/).
 1. Install the [OpenShift CLI](https://docs.openshift.com/online/getting_started/beyond_the_basics.html#btb-installing-the-openshift-cli).
-1. Add the Parse Server template to your project: `oc create -f https://raw.githubusercontent.com/ParsePlatform/asherah/master/openshift.json`
+1. Add the Parse Server template to your project: `oc create -f https://raw.githubusercontent.com/Cloud4WiSF/asherah/master/openshift.json`
 1. Deploy Parse Server from the web console
   1. Open your project in the [OpenShift Online Console](https://console.preview.openshift.com/console/):
   1. Click **Add to Project** from the top navigation

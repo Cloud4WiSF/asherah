@@ -1,7 +1,7 @@
 {
   "name": "asherah",
   "version": "1.4.0",
-  "description": "An example Parse API server using the parse-server module",
+  "description": "Volare Data Lake server",
   "main": "index.js",
   "repository": {
     "type": "git",

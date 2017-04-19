@@ -1,0 +1,2 @@
+{"functionName":"hello","params":{},"level":"info","message":"Ran cloud function hello for user undefined with:\n  Input: {}\n  Result: \"Hi\"","timestamp":"2017-04-19T01:53:26.547Z"}
+{"functionName":"hello","params":{"score":1337,"playerName":"Sean Plott","cheatMode":false},"level":"info","message":"Ran cloud function hello for user undefined with:\n  Input: {\"score\":1337,\"playerName\":\"Sean Plott\",\"cheatMode\":false}\n  Result: \"Hi\"","timestamp":"2017-04-19T01:54:04.454Z"}

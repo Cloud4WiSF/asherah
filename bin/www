@@ -1,0 +1,52 @@
+// The main application script, ties everything together.
+require('dotenv').config();
+
+var app     = require('../index');
+var http    = require('http');
+var cluster = require('cluster');
+var toobusy = require('toobusy-js');
+var sticky  = require('socketio-sticky-session');
+var os      = require('os');
+var numCPUs = os.cpus().length;
+
+var port = process.env.HTTP_PORT; // get port from environment and store in Express.
+app.set('port', port);
+app.set('http_port', process.env.HTTP_PORT);
+
+var createServer = function() {
+
+  var server = http.createServer(app);
+  var io = require('socket.io')(server); // setup socket.io, and socket-session
+
+  var socketIOExpressSession = require('socket.io-express-session'); 
+  io.use(socketIOExpressSession(app.session)); // session support
+
+  process.on("SIGINT", function () {
+      console.log('Shutting down');
+      process.exit();
+  });
+
+  return server;
+};
+
+var stickyOptions = {
+  num: numCPUs, 				      // specifies the process count and is omittable. If omitted the core count of the processor will be used instead.
+  proxy: false, 				      // activate layer 4 patching ! DEPENDS ON PLATFORM (at localhost runs at false)
+  header: 'x-forwarded-for', 	// provide here your header containing the users ip
+  sync: {
+    isSynced: true, 			    //activate synchronization
+  }
+}
+
+var server = sticky(stickyOptions, createServer).listen(port, function() {
+  console.log('Sticky cluster worker '
+    + (cluster.worker ? cluster.worker.id : 'master')
+    + ' server listening on port ' + port);
+});
+
+process.on('SIGINT', function() {
+  server.close();
+  toobusy.shutdown(); // calling .shutdown allows your process to exit normally
+  process.exit();
+});
+

@@ -1,42 +1,54 @@
-// Example express application adding the parse-server module to expose Parse
-// compatible API routes.
+require('dotenv').config();
 
-var express = require('express');
-var ParseServer = require('parse-server').ParseServer;
-var path = require('path');
+var express         = require('express');
+var ParseServer     = require('parse-server').ParseServer;
+var ParseDashboard  = require('parse-dashboard');
+var path            = require('path');
+var bodyParser      = require('body-parser');
+var app             = express();
 
-var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
+var databaseUri = process.env.DATABASE_URI;
 
-if (!databaseUri) {
-  console.log('DATABASE_URI not specified, falling back to localhost.');
-}
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 var api = new ParseServer({
-  databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  databaseURI: databaseUri,
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'myAppId',
-  masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
+  appId: process.env.APP_ID,
+  masterKey: process.env.MASTER_KEY,
+  serverURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
 });
-// Client-keys like the javascript key or the .NET key are not necessary with parse-server
-// If you wish you require them, you can set them as options in the initialization above:
-// javascriptKey, restAPIKey, dotNetKey, clientKey
 
-var app = express();
+var dashboard = new ParseDashboard({
+  "apps": [
+    {
+      "serverURL": process.env.SERVER_URL,
+      "appId": process.env.APP_ID,
+      "masterKey": process.env.MASTER_KEY,
+      "appName": process.env.APP_NAME
+    }
+  ]
+});
 
-// Serve static assets from the /public folder
-app.use('/public', express.static(path.join(__dirname, '/public')));
+// Setup routes
+var usersRoute = require('./routes/users');
+var devicesRoute = require('./routes/devices');
+var rolesRoute = require('./routes/roles');
+app.use('/api/users', usersRoute);
+app.use('/api/devices', devicesRoute);
+app.use('/api/roles', rolesRoute);
+app.use('/dashboard', dashboard); // make the Parse Dashboard available at /dashboard
+app.use('/public', express.static(path.join(__dirname, '/public'))); // Serve static assets from the /public folder
 
-// Serve the Parse API on the /parse URL prefix
-var mountPath = process.env.PARSE_MOUNT || '/parse';
+var mountPath = process.env.PARSE_MOUNT; // Serve the Parse API on the /parse URL prefix
 app.use(mountPath, api);
 
-// Parse Server plays nicely with the rest of your web routes
-app.get('/', function(req, res) {
-  res.status(200).send('I dream of being a website.  Please star the parse-server repo on GitHub!');
+app.get('/', function(req, res) { // Parse Server plays nicely with the rest of your web routes
+  res.status(200).send('Hello world!');
 });
 
 // There will be a test page available on the /test path of your server url
@@ -45,11 +57,7 @@ app.get('/test', function(req, res) {
   res.sendFile(path.join(__dirname, '/public/test.html'));
 });
 
-var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
-httpServer.listen(port, function() {
-    console.log('asherah running on port ' + port + '.');
-});
+ParseServer.createLiveQueryServer(httpServer); // This will enable the Live Query real-time server
 
-// This will enable the Live Query real-time server
-ParseServer.createLiveQueryServer(httpServer);
+module.exports = app;

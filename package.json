@@ -23,6 +23,7 @@
     "moment": "^2.18.1",
     "morgan": "^1.8.1",
     "parse": "~1.8.0",
+    "parse-dashboard": "^1.0.25",
     "parse-express-cookie-session": "0.0.3",
     "parse-express-https-redirect": "0.0.1",
     "parse-server": "*",

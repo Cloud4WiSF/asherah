@@ -33,7 +33,7 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node bin/www"
   },
   "engines": {
     "node": ">=4.3"

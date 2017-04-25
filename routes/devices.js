@@ -69,10 +69,10 @@ router.route('/:device_id')
 		});
     })
     .delete(function(req, res) {
-    	console.log("Im here! >>>>>>>>>>>> " + req.params.device_id);
+    	//console.log("Im here! >>>>>>>>>>>> " + req.params.device_id);
 
 		var query = new Parse.Query("Devices");
-		query.equalTo("objectId", req.params.device_id));
+		query.equalTo("objectId", req.params.device_id);
 
 		query.find().then(function(results) {
 		  // Create a trivial resolved promise as a base case.

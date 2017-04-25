@@ -113,25 +113,27 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="https://npmcdn.com/parse@1.9.2/dist/parse.min.js"></script>
 <script type="text/javascript">
+
+
     function fblogin() {
-        location.href = "http://localhost:1337/auth/facebook";
+        location.href = "/auth/facebook";
     };
 
     function twlogin() {
-        location.href = "http://localhost:1337/auth/twitter";
+        location.href = "/auth/twitter";
     };
 
     function lnklogin() {
-        location.href = "http://localhost:1337/fb-auth";
+        location.href = "/fb-auth";
     };
 
     function ggllogin() {
-        location.href = "http://localhost:1337/fb-auth";
+        location.href = "/fb-auth";
     };
 
     function fblogin2() {
       Parse.initialize("APPLICATION_ID", "JAVASCRIPT_KEY");
-      Parse.serverURL = 'http://localhost:1337/parse';
+      Parse.serverURL = '/parse';
 
       (function(d, debug){
          var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -173,7 +175,15 @@
       console.log("postFBLogin -- start -- user = " + user);
       var sessionToken = user._sessionToken;
       console.log("User session token: " + sessionToken);
-      
+      //location.href = "http://localhost:1337/api/fb"
+      $.post("/api/fb", { sessionToken: user }, function(data){
+          console.log("post error = " + data.errorCode + data.errorMessage);
+          if(data==='done') {
+            alert("login success");
+          }
+      });
+
+
       // Post the login
       // $.ajax({
       //   url: '/api/fb',

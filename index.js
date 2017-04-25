@@ -15,7 +15,7 @@ var TwitterStrategy   = require('passport-twitter').Strategy
 var GoogleStrategy    = require('passport-google').Strategy
 var app               = express();
 
-var databaseUri = process.env.DATABASE_URI;
+var databaseUri = process.env.MONGODB_URI;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

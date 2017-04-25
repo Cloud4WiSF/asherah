@@ -12,6 +12,7 @@
     "cookie-parse": "^0.4.0",
     "cookie-parser": "^1.4.3",
     "defaults": "^1.0.3",
+    "dotenv": "^4.0.0",
     "errorhandler": "^1.5.0",
     "express": "~4.11.x",
     "express-session": "^1.15.2",

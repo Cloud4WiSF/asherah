@@ -7,7 +7,7 @@ var Steps = {}
 Steps.init = function() {
   this.buildParseUrl();
   this.bindBtn('#step-1-btn', function(e){
-    ParseRequest.postData();
+    ParseRequest1.postData();
     e.preventDefault();
   })
 }
@@ -46,9 +46,9 @@ Steps.showWorkingMessage = function() {
  *  Parse requests handler
  */
 
-var ParseRequest = {};
+var ParseRequest1 = {};
 
-ParseRequest.postData = function() {
+ParseRequest1.postData = function() {
   XHR.setCallback(function(data){
     // store objectID
     Store.objectId = JSON.parse(data).objectId;
@@ -59,14 +59,14 @@ ParseRequest.postData = function() {
     // open second step
     Steps.openStep('#step-2');
     Steps.bindBtn('#step-2-btn', function(e){
-      ParseRequest.getData();
+      ParseRequest1.getData();
       e.preventDefault();
     });
   });
   XHR.POST('/parse/classes/GameScore');
 }
 
-ParseRequest.getData = function() {
+ParseRequest1.getData = function() {
   XHR.setCallback(function(data){
     // close second step
     Steps.closeStep('#step-2');
@@ -75,14 +75,14 @@ ParseRequest.getData = function() {
     // open third step
     Steps.openStep('#step-3');
     Steps.bindBtn('#step-3-btn', function(e){
-      ParseRequest.postCloudCodeData();
+      ParseRequest1.postCloudCodeData();
       e.preventDefault();
     })
   });
   XHR.GET('/parse/classes/GameScore');
 }
 
-ParseRequest.postCloudCodeData = function() {
+ParseRequest1.postCloudCodeData = function() {
   XHR.setCallback(function(data){
     // close second step
     Steps.closeStep('#step-3');

@@ -146,7 +146,7 @@
         success: function(user) {
           console.log("im here");
             if (!user.existed()) {
-                console.log(">> " + user);
+                console.log(">> " + JSON.stringify(user));
                 postFBLogin(user);
             } else {
                 console.log("fblogin2 -- else -- user.sessionToken = " + user._sessionToken);
@@ -160,16 +160,24 @@
     }    
 
     function postFBLogin(user) {
-      console.log("postFBLogin -- start -- user = " + user);
+      console.log("postFBLogin -- start -- user = " + JSON.stringify(user));
       var sessionToken = user._sessionToken;
       console.log("User session token: " + sessionToken);
+
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("POST", Config.getUrl() + path, true);
+      xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
+      xhttp.setRequestHeader("Content-type", "application/json");
+      xhttp.send(JSON.stringify({ "sessionToken": user._sessionToken }));
+
+
       //location.href = "http://localhost:1337/api/fb"
-      $.post(url + "/api/fb", { sessionToken: user }, function(data){
-          console.log("post error = " + data.errorCode + data.errorMessage);
-          if(data==='done') {
-            alert("login success");
-          }
-      });
+      // $.post(url + "/api/fb", { sessionToken: user }, function(data){
+      //     console.log("post error = " + data.errorCode + data.errorMessage);
+      //     if(data==='done') {
+      //       alert("login success");
+      //     }
+      // });
     }
 </script>
 </head>
@@ -180,7 +188,7 @@
     <script id="metamorph-21-start" type="text/x-placeholder"></script>
     <div class="container text-center">
       <form class="form-signin" data-ember-action="2">
-        <img src="assets/images/VOLARE_2016_RGB.svg" alt="Lights" width="200" height="80">
+        <img src="assets/images/JUST_ICON.jpg" alt="c4wlogo" width="200" height="80">
         <br/>
         <small class="text-muted">Connect with your favorite social network</small>
         <br><br>      

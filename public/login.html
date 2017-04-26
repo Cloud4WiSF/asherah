@@ -164,7 +164,7 @@
       var sessionToken = user._sessionToken;
       console.log("User session token: " + sessionToken);
       //location.href = "http://localhost:1337/api/fb"
-      $.post("/api/fb", { sessionToken: user }, function(data){
+      $.post(url + "/api/fb", { sessionToken: user }, function(data){
           console.log("post error = " + data.errorCode + data.errorMessage);
           if(data==='done') {
             alert("login success");
@@ -186,7 +186,7 @@
         <br><br>      
         <p>
           <!-- <a id="step-1-btn" class="btn btn-primary social-login-btn social-facebook"><i class="fa fa-facebook"></i></a> -->
-          <a class="btn btn-primary social-login-btn social-facebook" onclick="fblogin2()"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-primary social-login-btn social-facebook" onclick="fblogin()"><i class="fa fa-facebook"></i></a>
           <a class="btn btn-primary social-login-btn social-twitter" onclick="twlogin()"><i class="fa fa-twitter"></i></a>
           <a class="btn btn-primary social-login-btn social-linkedin"><i class="fa fa-linkedin"></i></a>
           <a class="btn btn-primary social-login-btn social-google"><i class="fa fa-google-plus"></i></a>

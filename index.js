@@ -30,12 +30,14 @@ var dashboard = new ParseDashboard({
       "masterKey": process.env.MASTER_KEY || 'MASTER_KEY',
       "appName": process.env.APP_NAME || "Asherah"
     }
+  ],
+  "users": [
+    {
+      "user":"asherah",
+      "pass":"pass123"
+    }
   ]
-}, "users": [
-{
-"user":"asherah",
-"pass":"pass123"
-});
+}, true);
 
 var app = express();
 // Dashboard

@@ -1,1 +1,1 @@
-web: ./node_modules/.bin/parse-dashboard --appId APPLICATION_ID --masterKey MASTER_KEY --serverURL "http://asherah755.herokuapp.com/parse" --appName asherah --user asherah --pass pass123 --allowInsecureHTTP
+web: ./node_modules/.bin/parse-dashboard --appId APPLICATION_ID --masterKey MASTER_KEY --serverURL "http://asherah755.herokuapp.com/parse" --appName asherah --config ./parse-dashboard-config.json

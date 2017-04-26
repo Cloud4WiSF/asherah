@@ -1,15 +1,4 @@
 {
-  "apps": [
-    {
-      "serverURL": "http://asherah755.herokuapp.com/parse",
-      "appId": "APPLICATION_ID",
-      "javascriptKey": "JAVASCRIPT_KEY",
-      "restKey": "REST_API_KEY",
-      "masterKey": "MASTER_KEY",
-      "appName": "Asherah",
-      "production": true
-    }
-  ],
   "users": [
     {
       "user":"asherah",

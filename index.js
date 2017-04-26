@@ -31,7 +31,11 @@ var dashboard = new ParseDashboard({
       "appName": process.env.APP_NAME || "Asherah"
     }
   ]
-}, true);
+}, "users": [
+{
+"user":"asherah",
+"pass":"pass123"
+});
 
 var app = express();
 // Dashboard

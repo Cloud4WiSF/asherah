@@ -39,6 +39,16 @@ var dashboard = new ParseDashboard({
 
 
 var app = express();
+
+var usersRoute = require('./routes/users');
+var devicesRoute = require('./routes/devices');
+var rolesRoute = require('./routes/roles');
+var fbUtilsRoute = require('./routes/facebookutils');
+app.use('/api/users', usersRoute);
+app.use('/api/devices', devicesRoute);
+app.use('/api/roles', rolesRoute);
+app.use('/api/fb', fbUtilsRoute);
+
 // Dashboard
 app.use('/dashboard', dashboard); // make the Parse Dashboard available at /dashboard
 
@@ -71,6 +81,8 @@ httpServer.listen(port, function() {
 
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);
+
+module.exports = app;
 
 // require('dotenv').config();
 

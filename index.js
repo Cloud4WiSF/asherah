@@ -2,6 +2,7 @@ require('dotenv').config();
 
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
+var ParseDashboard    = require('parse-dashboard');
 var path = require('path');
 
 var databaseUri = process.env.MONGODB_URI;
@@ -21,7 +22,20 @@ var api = new ParseServer({
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
+var dashboard = new ParseDashboard({
+  "apps": [
+    {
+      "serverURL": process.env.SERVER_URL || 'http://localhost:1337/parse',
+      "appId": process.env.APP_ID || 'APPLICATION_ID',
+      "masterKey": process.env.MASTER_KEY || 'MASTER_KEY',
+      "appName": process.env.APP_NAME || "Asherah"
+    }
+  ]
+});
+
 var app = express();
+// Dashboard
+app.use('/dashboard', dashboard); // make the Parse Dashboard available at /dashboard
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));

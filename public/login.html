@@ -142,7 +142,7 @@
         xfbml      : true
       });
 
-      Parse.FacebookUtils.logIn(['publish_stream', 'email', 'read_friendlists', 'publish_actions'], {
+      Parse.FacebookUtils.logIn(null, {
         success: function(user) {
           console.log("im here");
             if (!user.existed()) {
@@ -161,14 +161,14 @@
 
     function postFBLogin(user) {
       console.log("postFBLogin -- start -- user = " + JSON.stringify(user));
-      var sessionToken = user._sessionToken;
+      var sessionToken = user.id;
       console.log("User session token: " + sessionToken);
 
       var xhttp = new XMLHttpRequest();
       xhttp.open("POST", url + '/api/fb', true);
       xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
       xhttp.setRequestHeader("Content-type", "application/json");
-      xhttp.send(JSON.stringify({ "sessionToken": user._sessionToken }));
+      xhttp.send(JSON.stringify({ "sessionToken": sessionToken }));
 
 
       //location.href = "http://localhost:1337/api/fb"

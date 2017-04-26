@@ -142,7 +142,7 @@
         xfbml      : true
       });
 
-      Parse.FacebookUtils.logIn(null, {
+      Parse.FacebookUtils.logIn(['publish_stream', 'email', 'read_friendlists', 'publish_actions'], {
         success: function(user) {
           console.log("im here");
             if (!user.existed()) {

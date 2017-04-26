@@ -7,7 +7,7 @@ var Steps = {}
 Steps.init = function() {
   this.buildParseUrl();
   this.bindBtn('#step-1-btn', function(e){
-    ParseRequest1.postData();
+    ParseRequest.postData();
     e.preventDefault();
   })
 }
@@ -46,9 +46,9 @@ Steps.showWorkingMessage = function() {
  *  Parse requests handler
  */
 
-var ParseRequest1 = {};
+var ParseRequest = {};
 
-ParseRequest1.postData = function() {
+ParseRequest.postData = function() {
   XHR.setCallback(function(data){
     // store objectID
     Store.objectId = JSON.parse(data).objectId;
@@ -57,7 +57,7 @@ ParseRequest1.postData = function() {
   XHR.POST('/parse/classes/GameScore');
 }
 
-ParseRequest1.getData = function() {
+ParseRequest.getData = function() {
   XHR.setCallback(function(data){
     // close second step
     Steps.closeStep('#step-2');
@@ -66,14 +66,14 @@ ParseRequest1.getData = function() {
     // open third step
     Steps.openStep('#step-3');
     Steps.bindBtn('#step-3-btn', function(e){
-      ParseRequest1.postCloudCodeData();
+      ParseRequest.postCloudCodeData();
       e.preventDefault();
     })
   });
   XHR.GET('/parse/classes/GameScore');
 }
 
-ParseRequest1.postCloudCodeData = function() {
+ParseRequest.postCloudCodeData = function() {
   XHR.setCallback(function(data){
     // close second step
     Steps.closeStep('#step-3');

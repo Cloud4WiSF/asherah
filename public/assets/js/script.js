@@ -7,7 +7,7 @@ var Steps = {}
 Steps.init = function() {
   this.buildParseUrl();
   this.bindBtn('#step-1-btn', function(e){
-    ParseRequest1.postData();
+    ParseRequest.postData();
     e.preventDefault();
   })
 }
@@ -46,9 +46,9 @@ Steps.showWorkingMessage = function() {
  *  Parse requests handler
  */
 
-var ParseRequest1 = {};
+var ParseRequest = {};
 
-ParseRequest1.postData = function() {
+ParseRequest.postData = function() {
   XHR.setCallback(function(data){
     // store objectID
     Store.objectId = JSON.parse(data).objectId;
@@ -59,14 +59,14 @@ ParseRequest1.postData = function() {
     // open second step
     Steps.openStep('#step-2');
     Steps.bindBtn('#step-2-btn', function(e){
-      ParseRequest1.getData();
+      ParseRequest.getData();
       e.preventDefault();
     });
   });
   XHR.POST('/parse/classes/GameScore');
 }
 
-ParseRequest1.getData = function() {
+ParseRequest.getData = function() {
   XHR.setCallback(function(data){
     // close second step
     Steps.closeStep('#step-2');
@@ -75,14 +75,14 @@ ParseRequest1.getData = function() {
     // open third step
     Steps.openStep('#step-3');
     Steps.bindBtn('#step-3-btn', function(e){
-      ParseRequest1.postCloudCodeData();
+      ParseRequest.postCloudCodeData();
       e.preventDefault();
     })
   });
   XHR.GET('/parse/classes/GameScore');
 }
 
-ParseRequest1.postCloudCodeData = function() {
+ParseRequest.postCloudCodeData = function() {
   XHR.setCallback(function(data){
     // close second step
     Steps.closeStep('#step-3');
@@ -133,14 +133,14 @@ XHR.setCallback = function(callback) {
 XHR.POST = function(path, callback) {
   var seed = {"score":1337,"playerName":"Sean Plott","cheatMode":false}
   this.xhttp.open("POST", Config.getUrl() + path, true);
-  this.xhttp.setRequestHeader("X-Parse-Application-Id", "myAppId");
+  this.xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
   this.xhttp.setRequestHeader("Content-type", "application/json");
   this.xhttp.send(JSON.stringify(seed));
 }
 
 XHR.GET = function(path, callback) {
   this.xhttp.open("GET", Config.getUrl() + path + '/' + Store.objectId, true);
-  this.xhttp.setRequestHeader("X-Parse-Application-Id", "myAppId");
+  this.xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
   this.xhttp.setRequestHeader("Content-type", "application/json");
   this.xhttp.send(null);
 }

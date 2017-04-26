@@ -114,26 +114,18 @@
 <script src="https://npmcdn.com/parse@1.9.2/dist/parse.min.js"></script>
 <script type="text/javascript">
 
-
-    function fblogin() {
-        location.href = "/auth/facebook";
-    };
+    if (url) return url;
+    var port = window.location.port;
+    var url = window.location.protocol + '//' + window.location.hostname;
+    if (port) url = url + ':' + port;
 
     function twlogin() {
-        location.href = "/auth/twitter";
+        location.href = url + "/auth/twitter";
     };
 
-    function lnklogin() {
-        location.href = "/fb-auth";
-    };
-
-    function ggllogin() {
-        location.href = "/fb-auth";
-    };
-
-    function fblogin2() {
+    function fblogin() {
       Parse.initialize("APPLICATION_ID", "JAVASCRIPT_KEY");
-      Parse.serverURL = '/parse';
+      Parse.serverURL = url + '/parse';
 
       (function(d, debug){
          var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -145,33 +137,30 @@
     };
 
     window.fbAsyncInit = function() {
-        Parse.FacebookUtils.init({ // this line replaces FB.init({
-          appId      : '251840548555589', // Facebook App ID
-          cookie     : true, // enable cookies to allow Parse to access the session
-          xfbml      : true
-        });
+      Parse.FacebookUtils.init({ // this line replaces FB.init({
+        appId      : '251840548555589', // Facebook App ID
+        cookie     : true, // enable cookies to allow Parse to access the session
+        xfbml      : true
+      });
 
-        Parse.FacebookUtils.logIn(null, {
-          success: function(user) {
-            console.log("im here");
-              if (!user.existed()) {
-                  console.log(">> " + user);
-                  postFBLogin(user);
-              } else {
-                  console.log("fblogin2 -- else -- user.sessionToken = " + user._sessionToken);
-                  postFBLogin(user);
-              }
-          },
-          error: function(user, error) {
-              alert("User cancelled the Facebook login or did not fully authorize. Error =" + error.message);
-          }
-        });
-
-        
+      Parse.FacebookUtils.logIn(null, {
+        success: function(user) {
+          console.log("im here");
+            if (!user.existed()) {
+                console.log(">> " + user);
+                postFBLogin(user);
+            } else {
+                console.log("fblogin2 -- else -- user.sessionToken = " + user._sessionToken);
+                postFBLogin(user);
+            }
+        },
+        error: function(user, error) {
+            alert("User cancelled the Facebook login or did not fully authorize. Error =" + error.message);
+        }
+      });
     }    
 
     function postFBLogin(user) {
-
       console.log("postFBLogin -- start -- user = " + user);
       var sessionToken = user._sessionToken;
       console.log("User session token: " + sessionToken);
@@ -182,8 +171,7 @@
             alert("login success");
           }
       });
-
-  }
+    }
 </script>
 </head>
 <body>
@@ -198,7 +186,8 @@
         <small class="text-muted">Connect with your favorite social network</small>
         <br><br>      
         <p>
-          <a id="step-1-btn" class="btn btn-primary social-login-btn social-facebook"><i class="fa fa-facebook"></i></a>
+          <!-- <a id="step-1-btn" class="btn btn-primary social-login-btn social-facebook"><i class="fa fa-facebook"></i></a> -->
+          <a id="step-1-btn" class="btn btn-primary social-login-btn social-facebook" onclick="fblogin2()"><i class="fa fa-facebook"></i></a>
           <a class="btn btn-primary social-login-btn social-twitter" onclick="twlogin()"><i class="fa fa-twitter"></i></a>
           <a class="btn btn-primary social-login-btn social-linkedin"><i class="fa fa-linkedin"></i></a>
           <a class="btn btn-primary social-login-btn social-google"><i class="fa fa-google-plus"></i></a>

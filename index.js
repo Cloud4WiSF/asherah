@@ -55,7 +55,7 @@ var dashboard = new ParseDashboard({
     }
   ],
   "trustProxy": 1
-});
+}, true);
 
 var app = express();
 // Dashboard

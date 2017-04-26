@@ -114,7 +114,6 @@
 <script src="https://npmcdn.com/parse@1.9.2/dist/parse.min.js"></script>
 <script type="text/javascript">
 
-    if (url) return url;
     var port = window.location.port;
     var url = window.location.protocol + '//' + window.location.hostname;
     if (port) url = url + ':' + port;
@@ -187,7 +186,7 @@
         <br><br>      
         <p>
           <!-- <a id="step-1-btn" class="btn btn-primary social-login-btn social-facebook"><i class="fa fa-facebook"></i></a> -->
-          <a id="step-1-btn" class="btn btn-primary social-login-btn social-facebook" onclick="fblogin2()"><i class="fa fa-facebook"></i></a>
+          <a class="btn btn-primary social-login-btn social-facebook" onclick="fblogin2()"><i class="fa fa-facebook"></i></a>
           <a class="btn btn-primary social-login-btn social-twitter" onclick="twlogin()"><i class="fa fa-twitter"></i></a>
           <a class="btn btn-primary social-login-btn social-linkedin"><i class="fa fa-linkedin"></i></a>
           <a class="btn btn-primary social-login-btn social-google"><i class="fa fa-google-plus"></i></a>

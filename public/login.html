@@ -165,7 +165,7 @@
       console.log("User session token: " + sessionToken);
 
       var xhttp = new XMLHttpRequest();
-      xhttp.open("POST", Config.getUrl() + path, true);
+      xhttp.open("POST", url + '/api/fb', true);
       xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
       xhttp.setRequestHeader("Content-type", "application/json");
       xhttp.send(JSON.stringify({ "sessionToken": user._sessionToken }));

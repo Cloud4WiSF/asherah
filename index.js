@@ -22,6 +22,23 @@ var api = new ParseServer({
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
+// var dashboard = new ParseDashboard({
+//   "apps": [
+//     {
+//       "serverURL": process.env.SERVER_URL || 'http://localhost:1337/parse',
+//       "appId": process.env.APP_ID || 'APPLICATION_ID',
+//       "masterKey": process.env.MASTER_KEY || 'MASTER_KEY',
+//       "appName": process.env.APP_NAME || "Asherah"
+//     }
+//   ],
+//   "users": [
+//     {
+//       "user":"asherah",
+//       "pass":"pass123"
+//     }
+//   ]
+// }, true);
+
 var dashboard = new ParseDashboard({
   "apps": [
     {
@@ -36,8 +53,9 @@ var dashboard = new ParseDashboard({
       "user":"asherah",
       "pass":"pass123"
     }
-  ]
-}, true);
+  ],
+  "trustProxy": 1
+});
 
 var app = express();
 // Dashboard

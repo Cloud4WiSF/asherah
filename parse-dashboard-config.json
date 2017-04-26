@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "serverURL": "http://asherah755.herokuapp.com/parse", // For an app still hosted on Parse.com
+      "serverURL": "http://asherah755.herokuapp.com/parse",
       "appId": "APPLICATION_ID",
       "javascriptKey": "JAVASCRIPT_KEY",
       "restKey": "REST_API_KEY",
@@ -18,7 +18,7 @@
   "users": [
     {
       "user":"asherah",
-      "pass":"pass123" // change this to something secure
+      "pass":"pass123"
     }
   ]
 }

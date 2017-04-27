@@ -145,6 +145,7 @@
       Parse.FacebookUtils.logIn(null, {
         success: function(user) {
           console.log("im here>> " + JSON.stringify(user));
+          console.log(">>User session token: " + user.attributes.sessionToken);
           if (!user.existed()) {
             console.log(">> " + JSON.stringify(user));
             postFBLogin(user);

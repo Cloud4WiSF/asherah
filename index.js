@@ -123,6 +123,14 @@ passport.use(new TwitterStrategy({
   }
 ));
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/callback/twitter', 
   passport.authenticate('twitter', { failureRedirect: '/login' }),

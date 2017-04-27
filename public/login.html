@@ -146,12 +146,7 @@
         success: function(user) {
           console.log("im here>> " + JSON.stringify(user));
           console.log(">>User session token: " + user.attributes.sessionToken);
-          user.query().find({
-            success: function(list) {
-              console.log("Saw them! " + JSON.stringify(user));
-              postFBLogin(list);
-            }
-          });
+          postFBLogin(user);
         },
         error: function(user, error) {
           alert("User cancelled the Facebook login or did not fully authorize. Error =" + error.message);

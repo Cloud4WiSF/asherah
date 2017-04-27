@@ -42,6 +42,24 @@ var dashboard = new ParseDashboard({
 
 var app = express();
 
+app.configure(function() {
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.methodOverride());
+
+  app.use(express.cookieParser()); // read cookies (needed for auth)
+  app.use(express.bodyParser()); // get information from html forms
+  // required for passport
+  app.use(express.session({ secret: 'SECRET' })); // session secret
+  app.use(passport.initialize());
+  app.use(passport.session()); // persistent login sessions
+  app.use(flash()); // use connect-flash for flash messages stored in session
+
+  // app.use(app.router);
+  // app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'public')));
+});
+
 var usersRoute = require('./routes/users');
 var devicesRoute = require('./routes/devices');
 var rolesRoute = require('./routes/roles');

@@ -1,9 +1,11 @@
 require('dotenv').config();
 
-var express = require('express');
-var ParseServer = require('parse-server').ParseServer;
+var express           = require('express');
+var ParseServer       = require('parse-server').ParseServer;
 var ParseDashboard    = require('parse-dashboard');
-var path = require('path');
+var path              = require('path');
+var passport          = require('passport');
+var TwitterStrategy   = require('passport-twitter').Strategy
 
 var databaseUri = process.env.MONGODB_URI;
 
@@ -76,6 +78,28 @@ app.get('/login', function(req, res) {
 app.get('/userHasLoggedIn', function(req, res) { // Temporary 'default' callback if successfully logged in 
   res.json({ message : "User successfully logged in" });
 });
+
+/*
+  Initialize Twitter OAuth
+*/
+passport.use(new TwitterStrategy({
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: process.env.TWITTER_CALLBACK_URL
+  },
+  function(token, tokenSecret, profile, cb) {
+    console.log('Twitter id: ' + profile.id + ', ' + token)
+    cb(null, profile.id);
+  }
+));
+
+app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/callback/twitter', 
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/userHasLoggedIn');
+   });
 
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);

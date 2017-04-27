@@ -117,10 +117,6 @@
     var url = window.location.protocol + '//' + window.location.hostname;
     if (port) url = url + ':' + port;
 
-    function twlogin() {
-        location.href = url + "/auth/twitter";
-    };
-
     function fblogin() {
       Parse.initialize("APPLICATION_ID", "JAVASCRIPT_KEY");
       Parse.serverURL = url + '/parse';
@@ -143,9 +139,6 @@
 
       Parse.FacebookUtils.logIn(null, {
         success: function(user) {
-          console.log("im here>> " + JSON.stringify(user));
-          console.log(">>User session token: " + user.attributes.sessionToken);
-          //postFBLogin(user);
           location.href = url + "/userHasLoggedIn";
         },
         error: function(user, error) {
@@ -162,14 +155,14 @@
     <script id="metamorph-21-start" type="text/x-placeholder"></script>
     <div class="container text-center">
       <form class="form-signin" data-ember-action="2">
-        <img src="public/assets/images/JUST_ICON.jpg" alt="c4wlogo" width="80" height="80">
+        <img src="/public/assets/images/JUST_ICON.jpg" alt="c4wlogo" width="80" height="80">
         <br/>
         <small class="text-muted">Connect with your favorite social network</small>
         <br><br>      
         <p>
           <!-- <a id="step-1-btn" class="btn btn-primary social-login-btn social-facebook"><i class="fa fa-facebook"></i></a> -->
           <a class="btn btn-primary social-login-btn social-facebook" onclick="fblogin()"><i class="fa fa-facebook"></i></a>
-          <a class="btn btn-primary social-login-btn social-twitter" onclick="twlogin()"><i class="fa fa-twitter"></i></a>
+          <a href="/auth/twitter" class="btn btn-primary social-login-btn social-twitter"><i class="fa fa-twitter"></i></a>
           <a class="btn btn-primary social-login-btn social-linkedin"><i class="fa fa-linkedin"></i></a>
           <a class="btn btn-primary social-login-btn social-google"><i class="fa fa-google-plus"></i></a>
         </p>

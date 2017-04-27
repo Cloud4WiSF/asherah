@@ -114,6 +114,14 @@
 <script src="https://npmcdn.com/parse@1.9.2/dist/parse.min.js"></script>
 <script type="text/javascript">
 
+    // var port = window.location.port;
+    // var url = window.location.protocol + '//' + window.location.hostname;
+    // if (port) url = url + ':' + port;
+
+    // function twlogin() {
+    //     location.href = url + "/auth/twitter";
+    // };
+
     var port = window.location.port;
     var url = window.location.protocol + '//' + window.location.hostname;
     if (port) url = url + ':' + port;
@@ -146,7 +154,8 @@
         success: function(user) {
           console.log("im here>> " + JSON.stringify(user));
           console.log(">>User session token: " + user.attributes.sessionToken);
-          postFBLogin(user);
+          //postFBLogin(user);
+          location.href = url + "/userHasLoggedIn";
         },
         error: function(user, error) {
           alert("User cancelled the Facebook login or did not fully authorize. Error =" + error.message);
@@ -154,17 +163,17 @@
       });
     }    
 
-    function postFBLogin(user) {
-      console.log("postFBLogin -- start -- user = " + JSON.stringify(user));
-      var sessionToken = user.attributes.sessionToken;
-      console.log("User session token: " + user.attributes.sessionToken);
+    // function postFBLogin(user) {
+    //   console.log("postFBLogin -- start -- user = " + JSON.stringify(user));
+    //   var sessionToken = user.attributes.sessionToken;
+    //   console.log("User session token: " + user.attributes.sessionToken);
 
-      var xhttp = new XMLHttpRequest();
-      xhttp.open("POST", url + '/api/fb', true);
-      xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
-      xhttp.setRequestHeader("Content-type", "application/json");
-      xhttp.send(JSON.stringify({ "sessionToken": sessionToken }));
-    }
+    //   var xhttp = new XMLHttpRequest();
+    //   xhttp.open("POST", url + '/api/fb', true);
+    //   xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
+    //   xhttp.setRequestHeader("Content-type", "application/json");
+    //   xhttp.send(JSON.stringify({ "sessionToken": sessionToken }));
+    // }
 </script>
 </head>
 <body>

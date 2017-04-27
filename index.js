@@ -110,6 +110,17 @@ app.get('/userHasLoggedIn', function(req, res) { // Temporary 'default' callback
 });
 
 /*
+  Initilize passport user serialization
+  */
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+/*
   Initialize Twitter OAuth
 */
 passport.use(new TwitterStrategy({
@@ -123,13 +134,6 @@ passport.use(new TwitterStrategy({
   }
 ));
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/callback/twitter', 
@@ -137,6 +141,7 @@ app.get('/auth/callback/twitter',
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/userHasLoggedIn');
+    // user save
    });
 
 var port = process.env.PORT || 1337;

@@ -6,7 +6,30 @@ var ParseDashboard    = require('parse-dashboard');
 var path              = require('path');
 var passport          = require('passport');
 var TwitterStrategy   = require('passport-twitter').Strategy;
-var session           = require('express-session'); // needed for twitter: temporary secret is stored in the session to prevent cross site scripting attacks.
+
+// ---------- Session Handling ---------- //
+var ExpressSession = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(ExpressSession);
+var mongodbSessionstore = new MongoDBStore(
+      {
+        uri: process.env.MONGODB_HOST,
+        collection: process.env.MONGODB_SESSION_COLLECTION
+      });
+
+// Catch errors
+mongodbSessionstore.on('error', function(error) {
+  console.log("MongoDBStore error.");
+});
+
+var session = ExpressSession({
+  store: mongodbSessionstore,
+  key: 'jsessionid',
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+});
+// ---------- Session Handling ---------- //
 
 var databaseUri = process.env.MONGODB_URI;
 
@@ -44,11 +67,7 @@ var dashboard = new ParseDashboard({
 var app = express();
 
 // Authentication configuration
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  secret: 'SECRET' 
-}));
+app.use(session());
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());

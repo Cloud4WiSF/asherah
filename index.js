@@ -47,7 +47,7 @@ var fbUtilsRoute = require('./routes/facebookutils');
 app.use('/api/users', usersRoute);
 app.use('/api/devices', devicesRoute);
 app.use('/api/roles', rolesRoute);
-app.use('/api/fb', fbUtilsRoute);
+app.use('/', fbUtilsRoute);
 
 // Dashboard
 app.use('/dashboard', dashboard); // make the Parse Dashboard available at /dashboard

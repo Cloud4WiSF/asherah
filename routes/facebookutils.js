@@ -12,7 +12,7 @@ Parse.User.enableUnsafeCurrentUser();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
-router.route('/')
+router.route('/api/fb')
 	.post(function(req, res) {
 		var sessionToken = req.body.sessionToken;
 	    Parse.User.become(sessionToken).then(function (user) {

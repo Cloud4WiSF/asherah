@@ -67,7 +67,7 @@ var dashboard = new ParseDashboard({
 var app = express();
 
 // Authentication configuration
-app.use(session());
+app.use(session;
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());

@@ -144,17 +144,17 @@
 
       Parse.FacebookUtils.logIn(null, {
         success: function(user) {
-          console.log("im here");
-            if (!user.existed()) {
-                console.log(">> " + JSON.stringify(user));
-                postFBLogin(user);
-            } else {
-                console.log("User exists = " + user.authData.facebook.sessionToken);
-                postFBLogin(user);
-            }
+          console.log("im here>> " + JSON.stringify(user));
+          if (!user.existed()) {
+            console.log(">> " + JSON.stringify(user));
+            postFBLogin(user);
+          } else {
+            console.log("User exists = " + user.authData.facebook.sessionToken);
+            postFBLogin(user);
+          }
         },
         error: function(user, error) {
-            alert("User cancelled the Facebook login or did not fully authorize. Error =" + error.message);
+          alert("User cancelled the Facebook login or did not fully authorize. Error =" + error.message);
         }
       });
     }    

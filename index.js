@@ -12,7 +12,7 @@ var ExpressSession = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(ExpressSession);
 var mongodbSessionstore = new MongoDBStore(
       {
-        uri: process.env.MONGODB_HOST,
+        uri: process.env.MONGODB_URI,
         collection: process.env.MONGODB_SESSION_COLLECTION
       });
 

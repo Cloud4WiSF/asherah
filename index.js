@@ -5,7 +5,8 @@ var ParseServer       = require('parse-server').ParseServer;
 var ParseDashboard    = require('parse-dashboard');
 var path              = require('path');
 var passport          = require('passport');
-var TwitterStrategy   = require('passport-twitter').Strategy
+var TwitterStrategy   = require('passport-twitter').Strategy;
+var expressSession    = require('express-session'); // needed for twitter: temporary secret is stored in the session to prevent cross site scripting attacks.
 
 var databaseUri = process.env.MONGODB_URI;
 
@@ -42,23 +43,15 @@ var dashboard = new ParseDashboard({
 
 var app = express();
 
-app.configure(function() {
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.methodOverride());
-
-  app.use(express.cookieParser()); // read cookies (needed for auth)
-  app.use(express.bodyParser()); // get information from html forms
-  // required for passport
-  app.use(express.session({ secret: 'SECRET' })); // session secret
-  app.use(passport.initialize());
-  app.use(passport.session()); // persistent login sessions
-  app.use(flash()); // use connect-flash for flash messages stored in session
-
-  // app.use(app.router);
-  // app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-  app.use(express.static(path.join(__dirname, 'public')));
-});
+// Authentication configuration
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET' 
+}));
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 var usersRoute = require('./routes/users');
 var devicesRoute = require('./routes/devices');

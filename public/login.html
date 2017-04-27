@@ -156,8 +156,8 @@
 
     function postFBLogin(user) {
       console.log("postFBLogin -- start -- user = " + JSON.stringify(user));
-      var sessionToken = user.id;
-      console.log("User session token: " + user.__proto__.attributes.sessionToken);
+      var sessionToken = user.attributes.sessionToken;
+      console.log("User session token: " + user.attributes.sessionToken);
 /*
 postFBLogin -- start -- user = {"authData":{"facebook":{"id":"102517366983146","access_token":"EAADlDDJvy0UBAOEAoKIkaGXKWgBbTpLzuRSGMzZBvXRvCdodGIHSkFGlZCZBBJtflUREdAhpwpz8pyGg0Gn0AepgxhVgZCZAFjXO4EUfh65ZC5k7jPhhA2MO2ZB9wwTZBG1yuW2zS04HOh3c2PrZBsQNxYxWm7X1rSeUcSIUMTsHkG1VpLRgpI1gmnr4a9utTkZA06aL38hjdPHQZDZD","expiration_date":"2017-04-26T12:00:00.203Z"}},"createdAt":"2017-04-26T09:37:46.616Z","username":"RJ2O6m375ZUKWooVQd3LvCUZF","sessionToken":"r:a729d6d35c5da43c27d5970f62321f95","updatedAt":"2017-04-26T09:37:46.616Z","ACL":{"*":{"read":true},"kl5AFW7S87":{"read":true,"write":true}},"objectId":"kl5AFW7S87"}
 */
@@ -165,8 +165,7 @@ postFBLogin -- start -- user = {"authData":{"facebook":{"id":"102517366983146","
       xhttp.open("POST", url + '/api/fb', true);
       xhttp.setRequestHeader("X-Parse-Application-Id", "APPLICATION_ID");
       xhttp.setRequestHeader("Content-type", "application/json");
-      xhttp.send(JSON.stringify({ "sessionToken": sessionToken }));
-
+      xhttp.send("{ sessionToken: " + sessionToken + " }");
 
       //location.href = "http://localhost:1337/api/fb"
       // $.post(url + "/api/fb", { sessionToken: user }, function(data){

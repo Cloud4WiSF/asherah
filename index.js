@@ -73,6 +73,10 @@ app.get('/login', function(req, res) {
   res.sendFile(path.join(__dirname, '/public/login.html'));
 });
 
+app.get('/userHasLoggedIn', function(req, res) { // Temporary 'default' callback if successfully logged in 
+  res.json({ message : "User successfully logged in" });
+});
+
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {

@@ -14,7 +14,7 @@ router.use(bodyParser.json());
 
 router.route('/api/fb')
 	.post(function(req, res) {
-	    res.redirect('/UserHasLoggedIn');      
+	    res.redirect('/userHasLoggedIn');      
 	});
 
 

@@ -14,17 +14,7 @@ router.use(bodyParser.json());
 
 router.route('/api/fb')
 	.post(function(req, res) {
-		var sessionToken = req.body.sessionToken;
-	    Parse.User.become(sessionToken).then(function (user) {
-
-	      console.log("fbutils -- become -- success");
-	      // The current user is now set to user.
-	      res.redirect('/UserHasLoggedIn');
-
-	    }, function (error) {
-	      // The token could not be validated.
-	      console.log("fbutils -- become -- error = " + error);
-	    });       
+	    res.redirect('/UserHasLoggedIn');      
 	});
 
 

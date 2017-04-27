@@ -6,7 +6,7 @@ var ParseDashboard    = require('parse-dashboard');
 var path              = require('path');
 var passport          = require('passport');
 var TwitterStrategy   = require('passport-twitter').Strategy;
-var expressSession    = require('express-session'); // needed for twitter: temporary secret is stored in the session to prevent cross site scripting attacks.
+var session           = require('express-session'); // needed for twitter: temporary secret is stored in the session to prevent cross site scripting attacks.
 
 var databaseUri = process.env.MONGODB_URI;
 

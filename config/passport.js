@@ -1,19 +1,18 @@
-var bodyParser  = require('body-parser');
-var express     = require('express');
-var Parse       = require('parse/node');
-var router      = express.Router();
-
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use(bodyParser.json());
-
+var bodyParser       = require('body-parser');
+var express          = require('express');
+var Parse            = require('parse/node');
+var router           = express.Router();
 var LocalStrategy    = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy  = require('passport-twitter').Strategy;
 var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
-var bcrypt   = require('bcrypt-nodejs');
+var bcrypt           = require('bcrypt-nodejs');
+
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 Parse.initialize('APPLICATION_ID', 'JAVASCRIPT_KEY', 'MASTER_KEY');
-Parse.serverURL = 'http://localhost:3000/parse'; //'http://skatsayoh.herokuapp.com/parse';
+Parse.serverURL = 'https://asherah-755.herokuapp.com/parse'; // 'http://localhost:3000/parse';
 Parse.User.enableUnsafeCurrentUser();
 
 // load the auth variables

@@ -11,11 +11,11 @@ module.exports = {
     'twitterAuth' : {
         'consumerKey': 'bD5I6bVTP8xMJhAFxq9AGxTng',
         'consumerSecret': 'pUUsM8I2T1mcVDTxMSwbTKwVGAtafT4wGcUYrIfUkES6Y8N8Gg',
-        'callbackURL': 'https://asherah-755.herokuapp.com/auth/twitter/callback'//'http://localhost:3000/auth/callback/twitter'//
+        'callbackURL': 'https://asherah-755.herokuapp.com/auth/callback/twitter'//'http://localhost:3000/auth/callback/twitter'//
     },
     'googleAuth' : {
         'clientID': '242371238686-ka8bfn7ov7i8abbqttdfkbfmjh97rorn.apps.googleusercontent.com',
         'clientSecret': 'ioguUm5wBd9owyElkEcKe1EL',
-        'callbackURL': 'https://asherah-755.herokuapp.com/auth/twitter/google' //'http://localhost:3000/auth/callback/google'
+        'callbackURL': 'https://asherah-755.herokuapp.com/auth/callback/google' //'http://localhost:3000/auth/callback/google'
     }
 };

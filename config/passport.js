@@ -25,17 +25,11 @@ module.exports = function(passport) {
     // =========================================================================
     // required for persistent login sessions
     // passport needs ability to serialize and unserialize users out of session
-
-    // used to serialize the user for the session
-    /*
-      Initilize passport user serialization
-      */
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function(user, done) { // Initilize passport user serialization (used to serialize the user for the session)
         done(null, user.id);
     });
 
-    // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
+    passport.deserializeUser(function(id, done) { // used to deserialize the user
         var query = new Parse.Query('User');
         query.get(id, {
           success: function(user) {
@@ -50,8 +44,7 @@ module.exports = function(passport) {
     // =========================================================================
     // LOCAL SIGNUP ============================================================
     // =========================================================================
-    passport.use('local-signup', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
+    passport.use('local-signup', new LocalStrategy({ // by default, local strategy uses username and password, we will override with email
         usernameField : 'email',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
@@ -62,132 +55,132 @@ module.exports = function(passport) {
 
         // asynchronous
         // process.nextTick(function() { // Encountered error if uncommented -- FIX ME!!
-            console.log("[LOCAL-SIGNUP DEBUG] Checking user [" + JSON.stringify(req.user) + "]");
+        console.log("[LOCAL-SIGNUP DEBUG] Checking user [" + JSON.stringify(req.user) + "]");
 
-            // if the user is not already logged in:
-            if (!req.user) {
-                var User = Parse.Object.extend("User");
-                var query = new Parse.Query(User);
-                query.equalTo("local.email", email);
-                query.first({
-                  success: function(user) {
-                    // check to see if theres already a user with that email
-                    console.log("[LOCAL-SIGNUP DEBUG] Found User: " + JSON.stringify(user));
-                    if (user) {
-                        console.log("[LOCAL-SIGNUP DEBUG] Theres already a user with that email.")
-                        return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-                    } else {
-                        console.log("[LOCAL-SIGNUP DEBUG] Adding new user...");
-                        var local = { 
-                            'email': email, 
-                            'password' : bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-                        };
-
-                        var newUser = new Parse.User();
-                        newUser.set("username", email);
-                        newUser.set("password", bcrypt.hashSync(password, bcrypt.genSaltSync(8), null));
-                        newUser.set("local", local);
-
-                        newUser.signUp(null, {
-                          success: function(user) {
-                            return done(null, user);
-                          },
-                          error: function(user, error) {
-                            return done(error);
-                          }
-                        });
-                    }
-                  },
-                  error: function(object, error) {
+        // if the user is not already logged in:
+        if (!req.user) {
+            var User = Parse.Object.extend("User");
+            var query = new Parse.Query(User);
+            query.equalTo("local.email", email);
+            query.first({
+              success: function(user) {
+                
+                console.log("[LOCAL-SIGNUP DEBUG] Found User: " + JSON.stringify(user));
+                if (user) { // check to see if theres already a user with that email
+                    console.log("[LOCAL-SIGNUP DEBUG] Theres already a user with that email.")
+                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                } else {
                     console.log("[LOCAL-SIGNUP DEBUG] Adding new user...");
                     var local = { 
                         'email': email, 
-                        'password' : bcrypt.hashSync(password, bcrypt.genSaltSync(8), null) 
+                        'password' : bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
                     };
 
                     var newUser = new Parse.User();
                     newUser.set("username", email);
                     newUser.set("password", bcrypt.hashSync(password, bcrypt.genSaltSync(8), null));
-                    newUser.set("local", local); 
+                    newUser.set("local", local);
+
                     newUser.signUp(null, {
-                        success: function(user) {
-                            console.log("[LOCAL-SIGNUP DEBUG] Successfully signing up user " + JSON.stringify(user));
-                            return done(null, user);
-                        },
-                        error: function(user, error) {
-                            console.log("[LOCAL-SIGNUP DEBUG] Failed signing up user " + JSON.stringify(error));
+                      success: function(user) {
+                        return done(null, user);
+                      },
+                      error: function(user, error) {
+                        return done(error);
+                      }
+                    });
+                }
+              },
+              error: function(object, error) {
+                console.log("[LOCAL-SIGNUP DEBUG] Adding new user...");
+                var local = { 
+                    'email': email, 
+                    'password' : bcrypt.hashSync(password, bcrypt.genSaltSync(8), null) 
+                };
+
+                var newUser = new Parse.User();
+                newUser.set("username", email);
+                newUser.set("password", bcrypt.hashSync(password, bcrypt.genSaltSync(8), null));
+                newUser.set("local", local); 
+                newUser.signUp(null, {
+                    success: function(user) {
+                        console.log("[LOCAL-SIGNUP DEBUG] Successfully signing up user " + JSON.stringify(user));
+                        return done(null, user);
+                    },
+                    error: function(user, error) {
+                        console.log("[LOCAL-SIGNUP DEBUG] Failed signing up user " + JSON.stringify(error));
+                        return done(error);
+                    }
+                });
+              }
+            });
+
+        } else if ( !req.user.local ) {
+            var User = Parse.Object.extend("User");
+            var query = new Parse.Query(User);
+            query.equalTo("local.email", email);
+            query.first({
+              success: function(user) {
+    
+                if (user) { // check to see if theres already a user with that email
+                    console.log("[LOCAL-SIGNUP DEBUG] Theres already a user with that email.")
+                    return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
+                } else {
+                    var local = { 
+                        "email": email, 
+                        "password" : bcrypt.hashSync(password, bcrypt.genSaltSync(8), null) 
+                    };
+
+                    var updateUser = req.user;
+                    console.log("[LOCAL-SIGNUP DEBUG] updateUser: " + JSON.stringify(updateUser));
+                    updateUser.save({ 
+                        "local" : local
+                    }, { 
+                        useMasterKey : true,
+                        success: function(u) {
+                            console.log("[LOCAL-SIGNUP DEBUG] Successfuly updating user " + JSON.stringify(user));
+                            return done(null, u);
+                        },  
+                        error: function(error) {
+                            console.log("[LOCAL-SIGNUP DEBUG] Error updating user " + JSON.stringify(error));
                             return done(error);
                         }
                     });
-                  }
-                });
-
-            } else if ( !req.user.local ) {
-                var User = Parse.Object.extend("User");
-                var query = new Parse.Query(User);
-                query.equalTo("local.email", email);
-                query.first({
-                  success: function(user) {
-                    // check to see if theres already a user with that email
-                    if (user) {
-                        console.log("[LOCAL-SIGNUP DEBUG] Theres already a user with that email.")
-                        return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
-                    } else {
-                        var local = { 
-                            "email": email, 
-                            "password" : bcrypt.hashSync(password, bcrypt.genSaltSync(8), null) 
-                        };
-
-                        var updateUser = req.user;
-                        console.log("[LOCAL-SIGNUP DEBUG] updateUser: " + JSON.stringify(updateUser));
-                        updateUser.save({ 
-                            "local" : local
-                        }, { 
-                            useMasterKey : true,
-                            success: function(u) {
-                                console.log("[LOCAL-SIGNUP DEBUG] Successfuly updating user " + JSON.stringify(user));
-                                return done(null, u);
-                            },  
-                            error: function(error) {
-                                console.log("[LOCAL-SIGNUP DEBUG] Error updating user " + JSON.stringify(error));
-                                return done(error);
-                            }
-                        });
-                    }
-                  },
-                  error: function(object, error) {
-                    console.log("[LOCAL-SIGNUP DEBUG] Error at if(!req.user.local) { ... } " + JSON.stringify(error));
-                    return done(error);
-                  }
-                });
+                }
+              },
+              error: function(object, error) {
+                console.log("[LOCAL-SIGNUP DEBUG] Error at if(!req.user.local) { ... } " + JSON.stringify(error));
+                return done(error);
+              }
+            });
 
 
-                // ...presumably they're trying to connect a local account
-                // BUT let's check if the email used to connect a local account is being used by another user
-                // User.findOne({ 'local.email' :  email }, function(err, user) {
-                //     if (err)
-                //         return done(err);
-                    
-                //     if (user) {
-                //         return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
-                //         // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
-                //     } else {
-                //         var user = req.user;
-                //         user.local.email = email;
-                //         user.local.password = user.generateHash(password);
-                //         user.save(function (err) {
-                //             if (err)
-                //                 return done(err);
-                            
-                //             return done(null,user);
-                //         });
-                //     }
-                // });
-            } else {
-                console.log("[LOCAL-SIGNUP DEBUG] User is logged in and already has a local account. Ignore signup. " +
-                    "(You should log out before trying to create a new account, user!)");
-                return done(null, req.user);
-            }
+            // ...presumably they're trying to connect a local account
+            // BUT let's check if the email used to connect a local account is being used by another user
+            // User.findOne({ 'local.email' :  email }, function(err, user) {
+            //     if (err)
+            //         return done(err);
+                
+            //     if (user) {
+            //         return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
+            //         // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
+            //     } else {
+            //         var user = req.user;
+            //         user.local.email = email;
+            //         user.local.password = user.generateHash(password);
+            //         user.save(function (err) {
+            //             if (err)
+            //                 return done(err);
+                        
+            //             return done(null,user);
+            //         });
+            //     }
+            // });
+        } else {
+            console.log("[LOCAL-SIGNUP DEBUG] User is logged in and already has a local account. Ignore signup. " +
+                "(You should log out before trying to create a new account, user!)");
+            return done(null, req.user);
+        }
 
         // });
 

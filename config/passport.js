@@ -64,7 +64,6 @@ module.exports = function(passport) {
         // asynchronous
         // process.nextTick(function() { // Encountered error if uncommented -- FIX ME!!
             console.log("[LOCAL-SIGNUP DEBUG] Checking user [" + JSON.stringify(req.user) + "]");
-            // console.log("[LOCAL-SIGNUP DEBUG] Checking user local " + JSON.stringify(req.user.local));
 
             // if the user is not already logged in:
             if (!req.user) {
@@ -132,13 +131,6 @@ module.exports = function(passport) {
                   success: function(user) {
                     // check to see if theres already a user with that email
                     if (user) {
-                        /*
-                            But what if the user wants to link his existing account?
-                            Linking Users:
-                            user._linkWith('twitter', myAuthData).then(function(user){
-                                // user
-                            });
-                        */
                         console.log("[LOCAL-SIGNUP DEBUG] Theres already a user with that email.")
                         return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
                     } else {
@@ -218,28 +210,33 @@ module.exports = function(passport) {
         // asynchronous
         // process.nextTick(function() { // Encountered error if uncommented -- FIX ME!!
 
-            console.log("Local Loging called!");
+            console.log("[LOCAL LOGIN] Callback!");
 
             var User = Parse.Object.extend("User");
             var query = new Parse.Query(User);
             query.equalTo("local.email", email);
             query.first({
               success: function(user) {
-                console.log("Found User! " + JSON.stringify(user));
-                console.log("user:" + user.get("local").email); //+ ", with " + this.local.password);
-                // return done(null, user);
+                console.log("[LOGIN DEBUG] Found User! " + JSON.stringify(user));
+                
+                if(!user) {
+                    console.log("[LOGIN DEBUG] No user found.");
+                    return done(null, false, req.flash('loginMessage', 'No user found. '));
+                }
+
                 if(!bcrypt.compareSync(password, user.get("local").password)){
-                    console.log("Incorrect password");
+                    console.log("[LOGIN DEBUG] Incorrect password");
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
                 }
                 else {
-                    console.log("Correct password");
+                    console.log("[LOGIN DEBUG] Entered correct password. All is well.");
                     return done(null, user);
                 }
+                
               },
               error: function(object, error) {
-                console.log("User not found: " + JSON.stringify(error));
-                return done(null, false, req.flash('loginMessage', 'No user found. ' + error));
+                console.log("[LOGIN DEBUG] ERROR [" + JSON.stringify(error) + "]");
+                return done(null, error);
               }
             });
 
@@ -280,7 +277,7 @@ module.exports = function(passport) {
             query.equalTo("facebook.id", profile.id);
             query.first({
                 success: function(user) {
-                    console.log("[FB DEBUG] User:"+ JSON.stringify(user));
+                    console.log("[FB DEBUG] Successfull query call: " + JSON.stringify(user));
                     if(user) {
                         console.log("[FB DEBUG] User does exists: " + JSON.stringify(user));
 
@@ -380,19 +377,23 @@ module.exports = function(passport) {
     },
     function(req, token, tokenSecret, profile, done) {
 
+            console.log("[TWITTER DEBUG] Im here! " + token);
         // asynchronous
         // process.nextTick(function() { // Encountered error if uncommented -- FIX ME!!
             // check if the user is already logged in
             if (!req.user) {
+                console.log("[TWITTER DEBUG] Called FB callback!");
                 var User = Parse.Object.extend("User");
                 var query = new Parse.Query(User);
                 query.equalTo("twitter.id", profile.id);
-                query.find({
+                query.first({
                   success: function(user) {
                     // check to see if theres already a user with that email
                     if (user) {
+                        console.log("[TWITTER DEBUG] Successfull query call: " + JSON.stringify(user));
                         // if there is a user id already but no token (user was linked at one point and then removed)
                         if (!user.get("twitter").token) {
+                            console.log("[TWITTER DEBUG] Im here: " + JSON.stringify(user));
                             var twitter = {
                                 "token": token,
                                 "username": profile.username,
@@ -415,6 +416,7 @@ module.exports = function(passport) {
                         }
                         else 
                             return done(null, user);
+                        
 
                     } else {
                         var twitter = {
@@ -543,12 +545,11 @@ module.exports = function(passport) {
                 query.equalTo("google.id", profile.id);
                 query.first({
                   success: function(user) {
-                    console.log("[GOOGLE DEBUG] User:"+ JSON.stringify(user));
+                    console.log("[GOOGLE DEBUG] Successful query call:"+ JSON.stringify(user));
                     // check to see if theres already a user with that email
                     if (user) {
                         // if there is a user id already but no token (user was linked at one point and then removed)
                         if (!user.get("google").token) {
-                            console.log("00000");
                             var google = {
                                 "token": token,
                                 "name": profile.displayName,

@@ -9,8 +9,8 @@ module.exports = {
         'profileURL': 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email'
     },
     'twitterAuth' : {
-        'consumerKey': '6mFcbRSvFK0zvcJV2ownCDZ8F',
-        'consumerSecret': '6CqmDudCFM8756Flb9koPTBTiPU0vqxuY5AR5KWCBLl2h5CvVS',
+        'consumerKey': 'bD5I6bVTP8xMJhAFxq9AGxTng',
+        'consumerSecret': 'pUUsM8I2T1mcVDTxMSwbTKwVGAtafT4wGcUYrIfUkES6Y8N8Gg',
         'callbackURL': 'http://localhost:3000/auth/callback/twitter'//'http://skatsayoh.herokuapp.com/auth/twitter/callback'
     },
     'googleAuth' : {

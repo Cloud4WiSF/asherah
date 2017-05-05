@@ -96,7 +96,7 @@ module.exports = function(app, passport) {
 
         // send to twitter to do the authentication
         app.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
-        console.log(">>>>>>>>>>>>>>>>>>>>>>");
+
         // handle the callback after twitter has authenticated the user
         app.get('/auth/callback/twitter',
             passport.authenticate('twitter', {

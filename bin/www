@@ -1,6 +1,6 @@
 // The main application script, ties everything together.
-require('dotenv').config();
-
+// require('dotenv').config();
+/*
 var app     = require('../index');
 var http    = require('http');
 var cluster = require('cluster');
@@ -50,3 +50,4 @@ process.on('SIGINT', function() {
   process.exit();
 });
 
+*/

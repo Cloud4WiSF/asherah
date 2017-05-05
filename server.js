@@ -25,7 +25,7 @@ var api = new ParseServer({
   databaseURI: configDB.url, // 'mongodb://heroku_xz7n8dv2:c5aregj2ep3e4jcabj157tam7u@ds119081.mlab.com:19081/heroku_xz7n8dv2', // 'mongodb://localhost:27017/dev',
   appId: 'APPLICATION_ID',
   masterKey:  'MASTER_KEY', //Add your master key here. Keep it secret!
-  serverURL: 'http://skatsayoh.herokuapp.com/parse' //'http://localhost:3000/parse'  // Don't forget to change to https if needed
+  serverURL: 'http://asherah-755.herokuapp.com/parse' //'http://localhost:3000/parse'  // Don't forget to change to https if needed
 });
 
 // set up our express application

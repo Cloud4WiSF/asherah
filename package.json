@@ -2,7 +2,7 @@
   "name": "asherah",
   "version": "1.4.0",
   "description": "Volare Data Lake server",
-  "main": "index.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Cloud4WiSF/asherah"
@@ -41,7 +41,7 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=4.3"

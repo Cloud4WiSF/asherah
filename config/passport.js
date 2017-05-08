@@ -12,7 +12,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 Parse.initialize('APPLICATION_ID', 'JAVASCRIPT_KEY', 'MASTER_KEY');
-Parse.serverURL = 'https://asherah-755.herokuapp.com/parse'; // 'http://localhost:3000/parse';
+Parse.serverURL = 'https://asherahdev.herokuapp.com/parse'; // 'http://localhost:3000/parse';
 Parse.User.enableUnsafeCurrentUser();
 
 // load the auth variables

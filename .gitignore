@@ -1,3 +1,4 @@
 node_modules/
 logs/
-config/
+config/auth.js
+config/database.js

@@ -1,15 +1,10 @@
 # Asherah
 
-<<<<<<< HEAD
 Asherah is an embryonic Data Lake.
-Asherah is built on top of the [parse-server](https://github.com/ParsePlatform/parse-server) module on Express.
-=======
-Asherah is the Volare Data Lake
 Asherah is built on top of the following:
 1. [Parse Server](https://github.com/ParsePlatform/parse-server)
 2. [ExpressJS](https://expressjs.com/en/starter/basic-routing.html)
 3. [PassportJS](http://passportjs.org/docs/) to authenticate users locally, with Facebook, Twitter, and Google. 
->>>>>>> origin/feature-VOL-755
 
 ## Instructions
 
